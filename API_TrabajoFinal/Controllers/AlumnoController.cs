@@ -126,5 +126,52 @@ namespace API_TrabajoFinal.Controllers
                 return StatusCode(StatusCodes.Status200OK, new { message = ex.Message, error = ex.InnerException?.Message });
             }
         }
+
+        [HttpGet]
+        [Route("per_shift")]
+        public IActionResult cantidadAlumnosPorTurno()
+        {
+            try
+            {
+                var turnosConExamenes = _dbContext.Turnos.Include(t => t.Examenes).ToList();
+                var result = turnosConExamenes.Select(turno => new
+                {
+                    codTurno = turno.CodTurno,
+                    descTurno = turno.DescTurno,
+                    cantidadAlumnos = turno.Examenes.Count
+                });
+
+                return StatusCode(StatusCodes.Status200OK, new { message = "Cantidad de alumnos por turno", response = result });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("per_shift/aprobed")]
+        public IActionResult aprobadosPorTurno()
+        {
+            List<Turno> listaAlumnosAprobados = new List<Turno>();
+            try
+            {
+                listaAlumnosAprobados = _dbContext.Turnos.Include(e => e.Examenes).ToList();
+                var result = listaAlumnosAprobados.Select(turno => new
+                {
+                    codTurno = turno.CodTurno,
+                    descTurno = turno.DescTurno,
+                    cantidadAlumnos = turno.Examenes.Count(),
+                    cantidadAlumnosAprobados = turno.Examenes.Count(examen => examen.Nota >= 7),
+                    porcentaje = ((double)turno.Examenes.Count(examen => examen.Nota >= 7) * 100 / turno.Examenes.Count()).ToString("F2") + "%"
+                });
+
+                return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = result });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { message = ex.Message, response = new { } });
+            }
+        }
     }
 }

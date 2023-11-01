@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace API_TrabajoFinal.Models;
 
@@ -10,7 +11,7 @@ public partial class Materia
     public string? DescMat { get; set; }
 
     public string? DescCarrera { get; set; }
-
+    [JsonIgnore]
     public int NroLegajoP { get; set; }
 
     public virtual ICollection<Examen> Examenes { get; set; } = new List<Examen>();
