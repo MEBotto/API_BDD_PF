@@ -42,7 +42,7 @@ namespace API_TrabajoFinal.Controllers
             Alumno alumno = _dbContext.Alumnos.Find(legajoAlumno);
             if (alumno == null)
             {
-                return BadRequest("Producto no encontrado");
+                return BadRequest("Alumno no encontrado");
             }
 
             try
@@ -79,7 +79,7 @@ namespace API_TrabajoFinal.Controllers
             Alumno alumno = _dbContext.Alumnos.Find(objeto.NroLegajoA);
             if (alumno == null)
             {
-                return BadRequest("Producto no encontrado");
+                return BadRequest("Alumno no encontrado");
             }
 
             try
@@ -112,7 +112,7 @@ namespace API_TrabajoFinal.Controllers
 
             if (alumno == null)
             {
-                return BadRequest("Producto no encontrado");
+                return BadRequest("Alumno no encontrado");
             }
 
             try

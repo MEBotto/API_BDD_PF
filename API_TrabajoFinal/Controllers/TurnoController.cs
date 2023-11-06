@@ -23,12 +23,14 @@ namespace API_TrabajoFinal.Controllers
         [Route("info")]
         public IActionResult infoPorTurno()
         {
-            List<Materia> listaTurnosInfo = new List<Materia>();
+            //List<Materia> listaTurnosInfo = new List<Materia>();
+            List<Turno> listaTurnosInfo2 = new List<Turno>();
             try
             {
-                listaTurnosInfo = _dbContext.Materias.Include(t => t.NroLegajoPNavigation.CodTituloNavigation).ToList();
+                //listaTurnosInfo = _dbContext.Materias.Include(t => t.NroLegajoPNavigation.CodTituloNavigation).Include(t => t.Planificacions).ToList();
+                listaTurnosInfo2 = _dbContext.Turnos.Include(t => t.Planificacions).ThenInclude(p => p.CodMatNavigation).ThenInclude(p => p.NroLegajoPNavigation).ToList();
 
-                return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaTurnosInfo });
+                return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaTurnosInfo2 });
             }
             catch (Exception ex)
             {
