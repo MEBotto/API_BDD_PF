@@ -150,7 +150,7 @@ namespace API_TrabajoFinal.Controllers
         }
 
         [HttpGet]
-        [Route("per_shift/aprobed")]
+        [Route("per_shift/approved")]
         public IActionResult aprobadosPorTurno()
         {
             List<Turno> listaAlumnosAprobados = new List<Turno>();
