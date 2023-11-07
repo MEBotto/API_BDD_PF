@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace API_TrabajoFinal.Models;
 
@@ -26,6 +27,6 @@ public partial class Alumno
     public string? EstCivil { get; set; }
 
     public virtual TipoDoc? CodDocNavigation { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<Examen> Examenes { get; set; } = new List<Examen>();
 }

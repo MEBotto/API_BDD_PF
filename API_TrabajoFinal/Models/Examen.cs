@@ -5,7 +5,7 @@ namespace API_TrabajoFinal.Models;
 
 public partial class Examen
 {
-    public int NroLegajoA { get; set; }
+    public int? NroLegajoA { get; set; }
 
     public string CodMat { get; set; } = null!;
 
