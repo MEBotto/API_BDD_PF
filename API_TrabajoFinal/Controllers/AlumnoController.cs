@@ -27,6 +27,13 @@ namespace API_TrabajoFinal.Controllers
             try
             {
                 listaAlumnos = _dbContext.Alumnos.Include(c => c.CodDocNavigation).ToList();
+                foreach (var alumno in listaAlumnos)
+                {
+                    if (alumno.Direccion == null)
+                    {
+                        alumno.Direccion = "Sin dirección";
+                    }
+                }
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaAlumnos });
             }
             catch (Exception ex)
@@ -48,6 +55,10 @@ namespace API_TrabajoFinal.Controllers
             try
             {
                 alumno = _dbContext.Alumnos.Include(c => c.CodDocNavigation).Where(p => p.NroLegajoA == legajoAlumno).FirstOrDefault();
+                if (alumno.Direccion == null)
+                {
+                    alumno.Direccion = "Sin dirección";
+                }
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = alumno });
             }
             catch (Exception ex)

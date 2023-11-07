@@ -27,6 +27,13 @@ namespace API_TrabajoFinal.Controllers
             try
             {
                 listaExamenes = _dbContext.Examenes.Include(c => c.NroLegajoANavigation).Include(c => c.CodMatNavigation).Include(c => c.CodTurnoNavigation).ToList();
+                foreach(var examenes in listaExamenes)
+                {
+                    if (examenes.NroLegajoANavigation.Direccion == null)
+                    {
+                        examenes.NroLegajoANavigation.Direccion = "Sin dirección";
+                    }
+                }
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaExamenes });
             }
             catch (Exception ex)
@@ -47,7 +54,7 @@ namespace API_TrabajoFinal.Controllers
 
             try
             {
-                examen = _dbContext.Examenes.Where(p => p.NroLegajoA == legajoAlumno && p.CodMat == codMateria && p.CodTurno == codTurno && p.Año == year).FirstOrDefault();
+                examen = _dbContext.Examenes.Include(c => c.NroLegajoANavigation).Include(c => c.CodMatNavigation).Include(c => c.CodTurnoNavigation).Where(p => p.NroLegajoA == legajoAlumno && p.CodMat == codMateria && p.CodTurno == codTurno && p.Año == year).FirstOrDefault();
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = examen });
             }
             catch (Exception ex)

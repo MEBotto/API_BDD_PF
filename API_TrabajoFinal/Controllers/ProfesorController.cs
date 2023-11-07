@@ -27,6 +27,13 @@ namespace API_TrabajoFinal.Controllers
             try
             {
                 listaProfesores = _dbContext.Profesores.Include(c => c.CodDocNavigation).Include(c => c.CodTituloNavigation).ToList();
+                foreach (var profesor in listaProfesores)
+                {
+                    if (profesor.Direccion == null)
+                    {
+                        profesor.Direccion = "Sin dirección";
+                    }
+                }
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaProfesores });
             }
             catch (Exception ex)
@@ -48,6 +55,10 @@ namespace API_TrabajoFinal.Controllers
             try
             {
                 profesor = _dbContext.Profesores.Include(c => c.CodDocNavigation).Include(c => c.CodTituloNavigation).Where(p => p.NroLegajoP == legajoProfesor).FirstOrDefault();
+                if (profesor.Direccion == null)
+                {
+                    profesor.Direccion = "Sin dirección";
+                }
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = profesor });
             }
             catch (Exception ex)
