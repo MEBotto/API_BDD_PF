@@ -1,9 +1,11 @@
 ﻿using API_TrabajoFinal.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_TrabajoFinal.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Route("api/degree")]
     [ApiController]
     public class TituloController : ControllerBase

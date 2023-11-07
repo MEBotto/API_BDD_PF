@@ -1,10 +1,12 @@
 ﻿using API_TrabajoFinal.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API_TrabajoFinal.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Route("api/subjects")]
     [ApiController]
     public class MateriaController : ControllerBase

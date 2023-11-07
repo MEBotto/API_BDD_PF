@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace API_TrabajoFinal.Controllers
 {
+    [EnableCors("ReglasCors")]
     [Route("api/professors")]
     [ApiController]
     public class ProfesorController : ControllerBase
