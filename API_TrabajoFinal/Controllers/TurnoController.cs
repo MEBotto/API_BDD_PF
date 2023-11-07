@@ -46,23 +46,30 @@ namespace API_TrabajoFinal.Controllers
             }
         }
 
-        /*[HttpGet]
-        [Route("inffo")]
+        [HttpGet]
+        [Route("students")]
         public IActionResult alumnosIncriptosPorTurno()
         {
-            //List<Materia> listaTurnosInfo = new List<Materia>();
-            List<Turno> listaTurnosInfo2 = new List<Turno>();
+            List<Turno> listaEstudiantesPorTurno = new List<Turno>();
             try
             {
-                //listaTurnosInfo = _dbContext.Materias.Include(t => t.NroLegajoPNavigation.CodTituloNavigation).Include(t => t.Planificacions).ToList();
-                listaTurnosInfo2 = _dbContext.Turnos.Include(t => t.Planificacions).ThenInclude(p => p.CodMatNavigation).ThenInclude(p => p.NroLegajoPNavigation).ToList();
-
-                return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaTurnosInfo2 });
+                listaEstudiantesPorTurno = _dbContext.Turnos.Include(t => t.Examenes).ThenInclude(e => e.NroLegajoANavigation).ToList();
+                foreach (var turno in listaEstudiantesPorTurno)
+                {
+                    foreach (var examen in turno.Examenes)
+                    {
+                        if (examen.NroLegajoANavigation.Direccion == null)
+                        {
+                            examen.NroLegajoANavigation.Direccion = "Sin dirección";
+                        }
+                    }
+                }
+                return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaEstudiantesPorTurno });
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status200OK, new { message = ex.Message, response = new { } });
             }
-        }*/
+        }
     }
 }
