@@ -33,6 +33,7 @@ namespace API_TrabajoFinal.Controllers
                     {
                         examenes.NroLegajoANavigation.Direccion = "Sin dirección";
                     }
+                    examenes.CodTurnoNavigation.Examenes = null;
                 }
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = listaExamenes });
             }
@@ -43,10 +44,10 @@ namespace API_TrabajoFinal.Controllers
         }
 
         [HttpGet]
-        [Route("list_one/{legajoAlumno:int}/{codMateria}/{codTurno}/{year}")]
-        public IActionResult Obtener(int legajoAlumno, string codMateria, string codTurno, string year)
+        [Route("list_one/")]
+        public IActionResult Obtener(int legajo, string materia, string turno, string year)
         {
-            Examen examen = _dbContext.Examenes.Where(p => p.NroLegajoA == legajoAlumno && p.CodMat == codMateria && p.CodTurno == codTurno && p.Año == year).FirstOrDefault();
+            Examen examen = _dbContext.Examenes.Where(p => p.NroLegajoA == legajo && p.CodMat == materia && p.CodTurno == turno && p.Año == year).FirstOrDefault();
             if (examen == null)
             { 
                 return BadRequest("Examen no encontrado");
@@ -54,7 +55,8 @@ namespace API_TrabajoFinal.Controllers
 
             try
             {
-                examen = _dbContext.Examenes.Include(c => c.NroLegajoANavigation).Include(c => c.CodMatNavigation).Include(c => c.CodTurnoNavigation).Where(p => p.NroLegajoA == legajoAlumno && p.CodMat == codMateria && p.CodTurno == codTurno && p.Año == year).FirstOrDefault();
+                examen = _dbContext.Examenes.Include(c => c.NroLegajoANavigation).Include(c => c.CodMatNavigation).Include(c => c.CodTurnoNavigation).Where(p => p.NroLegajoA == legajo && p.CodMat == materia && p.CodTurno == turno && p.Año == year).FirstOrDefault();
+                examen.CodTurnoNavigation.Examenes = null;
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok", response = examen });
             }
             catch (Exception ex)
@@ -109,10 +111,10 @@ namespace API_TrabajoFinal.Controllers
         }
 
         [HttpDelete]
-        [Route("delete/{legajoAlumno:int}/{codMateria}/{codTurno}/{year}")]
-        public IActionResult eliminar(int legajoAlumno, string codMateria, string codTurno, string year)
+        [Route("delete/")]
+        public IActionResult eliminar(int legajo, string materia, string turno, string year)
         {
-            Examen examen = _dbContext.Examenes.Where(p => p.NroLegajoA == legajoAlumno && p.CodMat == codMateria && p.CodTurno == codTurno && p.Año == year).FirstOrDefault();
+            Examen examen = _dbContext.Examenes.Where(p => p.NroLegajoA == legajo && p.CodMat == materia && p.CodTurno == turno && p.Año == year).FirstOrDefault();
 
             if (examen == null)
             {
