@@ -73,6 +73,10 @@ namespace API_TrabajoFinal.Controllers
         {
             try
             {
+                var ultimoRegistro = _dbContext.Profesores.OrderByDescending(e => e.NroLegajoP).FirstOrDefault();
+                int codUltimoRegistro = ultimoRegistro.NroLegajoP;
+                int nuevoNumero = codUltimoRegistro + 1;
+                objeto.NroLegajoP = nuevoNumero;
                 _dbContext.Profesores.Add(objeto);
                 _dbContext.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { message = "ok" });

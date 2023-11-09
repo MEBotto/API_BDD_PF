@@ -17,9 +17,9 @@ public partial class Examen
 
     public DateTime? FechaInscripcion { get; set; }
 
-    public virtual Materia CodMatNavigation { get; set; } = null!;
+    public virtual Materia? CodMatNavigation { get; set; }
 
-    public virtual Turno CodTurnoNavigation { get; set; } = null!;
+    public virtual Turno? CodTurnoNavigation { get; set; }
 
-    public virtual Alumno NroLegajoANavigation { get; set; } = null!;
+    public virtual Alumno? NroLegajoANavigation { get; set; }
 }
